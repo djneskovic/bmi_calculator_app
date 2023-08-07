@@ -1,0 +1,74 @@
+.hero {
+	@include screen-lg {
+		margin-bottom: 5rem;
+	}
+	&-context {
+		width: 300px;
+
+		@include screen-sm {
+			width: 450px;
+		}
+
+		@include screen-md {
+			width: 700px;
+		}
+
+		@include screen-lg {
+			width: 40%;
+		}
+
+		@include screen-xl {
+			width: 50%;
+		}
+
+		margin-bottom: 2rem;
+		&__logo {
+			width: 110px;
+			height: 110px;
+
+			@include screen-lg {
+				width: 150px;
+				height: 150px;
+			}
+		}
+
+		&__title {
+			font-size: 3rem;
+			font-weight: bold;
+
+			@include screen-sm {
+				font-size: 3.8rem;
+			}
+		}
+
+		&__text {
+			font-size: 0.9rem;
+			margin-top: 1rem;
+			color: #212121;
+			font-weight: 300;
+
+			@include screen-sm {
+				font-size: 1rem;
+			}
+
+			@include screen-xl {
+				font-size: 1.2rem;
+			}
+		}
+	}
+}
+
+#hero {
+	background: rgb(255, 255, 255);
+	background: linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 1) 0%,
+		rgba(214, 231, 253, 1) 99%
+	);
+
+	@include screen-lg {
+		min-height: 80vh;
+		display: grid;
+		place-items: center;
+	}
+}
