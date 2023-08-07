@@ -12,6 +12,8 @@
 					id="metric"
 					class="radio-btn"
 					value="metric"
+					name="option"
+					v-model="selectedOption"
 					checked
 				/>
 				<label for="metric">Metric</label>
@@ -22,6 +24,8 @@
 					id="imperial"
 					class="radio-btn"
 					value="imperial"
+					name="option"
+					v-model="selectedOption"
 				/>
 				<label for="imperial">Imperial</label>
 			</div>
@@ -35,17 +39,27 @@
 				class="height flex flex-col items-start justify-center relative"
 			>
 				<label for="height">Height</label>
-				<input type="number" id="height" required />
-				<span>cm</span>
+				<input
+					type="number"
+					id="height"
+					v-model="height"
+					required
+				/>
+				<span>{{ heightUnit }}</span>
 			</div>
 			<div
 				class="weight flex flex-col items-start justify-center relative"
 			>
 				<label for="weight">Weight</label>
-				<input type="number" id="weight" required />
-				<span>kg</span>
+				<input
+					type="number"
+					id="weight"
+					v-model="weight"
+					required
+				/>
+				<span>{{ weightUnit }}</span>
 			</div>
-			<button>Calculate</button>
+			<button @click="calcBmi()">Calculate</button>
 		</div>
 
 		<!-- Results -->
@@ -53,8 +67,8 @@
 			class="results flex flex-col md:flex-row items-center justify-center md:justify-between"
 		>
 			<div class="results-index">
-				<p>Your BMI is...</p>
-				<h2>23.4</h2>
+				<p>{{ bmiTitle }}</p>
+				<h2>{{ bmiResult }}</h2>
 			</div>
 			<div class="results-ideal">
 				<p>
@@ -65,3 +79,66 @@
 		</div>
 	</div>
 </template>
+
+<script setup>
+import { ref, computed } from "vue";
+
+const selectedOption = ref("metric");
+
+const height = ref("");
+const weight = ref("");
+
+const bmi = ref("");
+const bmiResult = ref("");
+
+const bmiTitle = ref("Welcome");
+
+// Computed
+
+const heightUnit = computed(() => {
+	bmiTitle.value = "Welcome";
+	bmiResult.value = "";
+	return selectedOption.value === "metric" ? "cm" : "in";
+});
+
+const weightUnit = computed(() => {
+	bmiTitle.value = "Welcome";
+	bmiResult.value = "";
+	return selectedOption.value === "metric" ? "kg" : "lbs";
+});
+
+// Function
+function calcBmiMetric() {
+	bmi.value = (weight.value / height.value ** 2) * 10000;
+
+	height.value = "";
+	weight.value = "";
+
+	bmiResult.value = bmi.value.toFixed(1); // Format the BMI value with one decimal place
+
+	bmiTitle.value = "Your Bmi is...";
+
+	return bmiResult.value;
+}
+
+function calcBmiImperial() {
+	bmi.value = (weight.value / height.value ** 2) * 703;
+
+	height.value = "";
+	weight.value = "";
+
+	bmiResult.value = bmi.value.toFixed(1); // Format the BMI value with one decimal place
+
+	bmiTitle.value = "Your Bmi is...";
+
+	return bmiResult.value;
+}
+
+function calcBmi() {
+	if (selectedOption.value === "metric") {
+		calcBmiMetric();
+	} else {
+		calcBmiImperial();
+	}
+}
+</script>
