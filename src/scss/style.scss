@@ -41,7 +41,9 @@ input[type="number"] {
 
 @import "./components/bmi-form";
 @import "./components/advice-item";
+@import "./components/_limitations-items.scss";
 
 @import "./pages/hero-page";
 @import "./pages/about-page";
 @import "./pages/advice-page";
+@import "./pages/limitation-page";

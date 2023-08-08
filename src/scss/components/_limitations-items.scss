@@ -1,0 +1,137 @@
+.item {
+	background: #fff;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	padding: 1.5rem 2rem;
+	border-radius: 10px;
+}
+
+.logo-title {
+	margin-bottom: 1rem;
+
+	h2 {
+		font-size: 1.1rem;
+		font-weight: bold;
+	}
+}
+
+.limitation-items {
+	p {
+		font-size: 0.9rem;
+		color: #4d4d4d;
+	}
+}
+
+.orange {
+	color: orange;
+}
+
+.cyan {
+	color: rgba(214, 231, 253, 1);
+}
+
+.purple {
+	color: #b88fea;
+}
+
+.yellow {
+	color: #f4e69b;
+	background-color: transparent;
+}
+
+.lila {
+	color: #e084b2;
+}
+
+.item-one {
+	order: 1;
+	@include screen-md {
+		order: 4;
+	}
+
+	@include screen-lg {
+		order: 1;
+		transform: translateX(-10rem);
+		transition: transform 1s ease;
+
+		&:hover {
+			transform: translateX(10rem);
+		}
+	}
+	@include screen-xl {
+		order: 1;
+		transform: translateX(-15rem);
+
+		transition: transform 1s ease;
+
+		&:hover {
+			transform: translateX(15rem);
+		}
+	}
+}
+
+.item-two {
+	order: 2;
+}
+
+.item-three {
+	order: 3;
+}
+
+.second-one {
+	@include screen-lg {
+		transform: translateX(-5rem);
+		transition: transform 1s ease;
+
+		&:hover {
+			transform: translateX(5rem);
+		}
+	}
+	@include screen-xl {
+		transform: translateX(-7.5rem);
+		transition: transform 1s ease;
+
+		&:hover {
+			transform: translateX(7.5rem);
+		}
+	}
+}
+
+.third-one {
+	@include screen-lg {
+		transform: translateX(5rem);
+		transition: transform 1s ease;
+
+		&:hover {
+			transform: translateX(-5rem);
+		}
+	}
+
+	@include screen-xl {
+		transform: translateX(7.5rem);
+		transition: transform 1s ease;
+
+		&:hover {
+			transform: translateX(-7.5rem);
+		}
+	}
+}
+
+.third-two {
+	@include screen-lg {
+		transform: translateX(10rem);
+		transition: transform 1s ease;
+
+		&:hover {
+			transform: translateX(-10rem);
+		}
+	}
+
+	@include screen-xl {
+		transform: translateX(15rem);
+		transition: transform 1s ease;
+
+		&:hover {
+			transform: translateX(-15rem);
+		}
+	}
+}
