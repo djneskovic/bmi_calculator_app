@@ -72,8 +72,8 @@
 			</div>
 			<div class="results-ideal">
 				<p>
-					Your BMI suggests you're a healthy weight. Your ideal
-					weight is <span>63.3kg.</span>
+					{{ bmiText }}
+					<span>{{ idealWeight }}{{ idealUnit }}</span>
 				</p>
 			</div>
 		</div>
@@ -92,31 +92,77 @@ const bmi = ref("");
 const bmiResult = ref("");
 
 const bmiTitle = ref("Welcome");
+const bmiText = ref(
+	"Enter your weight and height and you'll see your BMI result here."
+);
+
+const idealWeight = ref("");
+const idealUnit = ref("");
+
+const minIdealBMI = 18.5;
+const maxIdealBMI = 24.9;
 
 // Computed
 
 const heightUnit = computed(() => {
 	bmiTitle.value = "Welcome";
 	bmiResult.value = "";
+	bmiText.value =
+		"Enter your weight and height and you'll see your BMI result here.";
+	idealWeight.value = "";
+	idealUnit.value = "";
+
 	return selectedOption.value === "metric" ? "cm" : "in";
 });
 
 const weightUnit = computed(() => {
 	bmiTitle.value = "Welcome";
 	bmiResult.value = "";
+	bmiText.value =
+		"Enter your weight and height and you'll see your BMI result here.";
+	idealWeight.value = "";
+	idealUnit.value = "";
+
 	return selectedOption.value === "metric" ? "kg" : "lbs";
+});
+
+const resultText = computed(() => {
+	if (bmiResult.value < 18.5) {
+		return (bmiText.value =
+			"Your BMI suggests you're a underweight. Your ideal weight is ");
+	} else if (bmiResult.value >= 18.5 && bmiResult.value < 24.9) {
+		return (bmiText.value =
+			"Your BMI suggests you're a normal weight. Your ideal weight is ");
+	} else if (bmiResult.value >= 24.9 && bmiResult.value < 29.9) {
+		return (bmiText.value =
+			"Your BMI suggests you're a overweight. Your ideal weight is ");
+	} else if (bmiResult.value >= 29.9) {
+		return (bmiText.value =
+			"Your BMI suggests you're a obese. Your ideal weight is ");
+	}
 });
 
 // Function
 function calcBmiMetric() {
 	bmi.value = (weight.value / height.value ** 2) * 10000;
 
-	height.value = "";
-	weight.value = "";
-
-	bmiResult.value = bmi.value.toFixed(1); // Format the BMI value with one decimal place
+	bmiResult.value = bmi.value.toFixed(1);
 
 	bmiTitle.value = "Your Bmi is...";
+
+	bmiText.value = resultText.value;
+
+	const minIdealWeight = (minIdealBMI * height.value ** 2) / 10000;
+	const maxIdealWeight = (maxIdealBMI * height.value ** 2) / 10000;
+
+	idealWeight.value = `${minIdealWeight.toFixed(
+		1
+	)} - ${maxIdealWeight.toFixed(1)}`;
+
+	idealUnit.value = "kg";
+
+	height.value = "";
+	weight.value = "";
 
 	return bmiResult.value;
 }
@@ -124,12 +170,23 @@ function calcBmiMetric() {
 function calcBmiImperial() {
 	bmi.value = (weight.value / height.value ** 2) * 703;
 
-	height.value = "";
-	weight.value = "";
-
-	bmiResult.value = bmi.value.toFixed(1); // Format the BMI value with one decimal place
+	bmiResult.value = bmi.value.toFixed(1);
 
 	bmiTitle.value = "Your Bmi is...";
+
+	bmiText.value = resultText.value;
+
+	const minIdealWeight = (minIdealBMI * height.value ** 2) / 703;
+	const maxIdealWeight = (maxIdealBMI * height.value ** 2) / 703;
+
+	idealWeight.value = `${minIdealWeight.toFixed(
+		1
+	)} - ${maxIdealWeight.toFixed(1)}`;
+
+	idealUnit.value = "lbs";
+
+	height.value = "";
+	weight.value = "";
 
 	return bmiResult.value;
 }
